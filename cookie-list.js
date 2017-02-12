@@ -1,24 +1,20 @@
 (function ($) {
     $.fn.extend({
-        cookieObj: function (params) {
-            var settings = $.extend({}, {
-                cookieName: 'Default',
-                expires: 1
-                }, params),
-                cookie = $.cookie(settings.cookieName),
+        cookieObj: function (cookieName) {
+                cookie = $.cookie(cookieName),
                 listObj = cookie ? $.parseJSON(cookie) : [];
             return {
                 add: function (list) {
                     listObj.push(list);
-                    $.cookie(cookieName, JSON.stringify(listObj), { expires: settings.expires, path: '/' });
+                    $.cookie(cookieName, JSON.stringify(listObj), { expires: 365, path: '/' });
                 },
                 clear: function() {
-                    $.cookie(cookieName, null);
+                    $.removeCookie(cookieName, { path: '/' });
                 },
                 remove: function(index) {
                     if(listObj[index]) {
                         listObj.splice(index, 1);
-                        $.cookie(cookieName, JSON.stringify(listObj), {expires: settings.expires, path: '/'});
+                        $.cookie(cookieName, JSON.stringify(listObj), {expires: 365, path: '/'});
                     }
                 },
                 listAll: function() {
